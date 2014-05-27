@@ -67,6 +67,7 @@ end
 
 bash "bundle install in application directory" do
   user 'rails'
+  group 'sudo'
   cwd '/home/rails/rails_app/current'
   code <<-EOH
   /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle install
@@ -74,10 +75,10 @@ bash "bundle install in application directory" do
 end
 
 bash "install ref & therubyracer" do
-  user 'rails'
-  cwd '/home/rails/rails_app/current'
+  user 'root'
+  cwd '/tmp'
   code <<-EOH
-  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec gem install ref
-  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec gem install therubyracer
+  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/gem install ref
+  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/gem install therubyracer
   EOH
 end
