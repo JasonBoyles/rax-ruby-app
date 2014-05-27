@@ -77,7 +77,7 @@ bash "install ref & therubyracer" do
   user 'rails'
   cwd '/home/rails/rails_app/current'
   code <<-EOH
-  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundler exec gem install ref
-  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundler exec gem install therubyracer
+  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec gem install ref
+  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec gem install therubyracer
   EOH
 end
