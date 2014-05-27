@@ -29,7 +29,7 @@ user "rails" do
   system true
 end
 
-group "admin" do
+group "sudo" do
   action :modify
   members "rails"
   append true
@@ -47,8 +47,8 @@ if node[:rax_ruby_app][:ruby_install_type] == 'chruby'
   node.set[:chruby][:default] = node[:rax_ruby_app][:ruby_version]
   include_recipe 'chruby::system'
   bash "install bundler" do
-    user 'rails'
-    cwd '/home/rails/rails_app'
+    user 'root'
+    cwd '/tmp'
     code <<-EOH
     sudo /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/gem install bundler
     EOH
@@ -73,4 +73,3 @@ bash "install ref & therubyracer" do
   /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundler exec gem install therubyracer
   EOH
 end
-

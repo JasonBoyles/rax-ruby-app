@@ -2,6 +2,8 @@
 # vi: set ft=ruby :
 
 Vagrant.configure('2') do |config|
+  config.vm.network "forwarded_port", guest: 3000, host: 8181,
+    auto_correct: true
   config.vm.hostname = 'rax-ruby-app'
   config.vm.box = 'ubuntu-12.04'
   config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_#{config.vm.box}_chef-provisionerless.box"
