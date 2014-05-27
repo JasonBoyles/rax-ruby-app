@@ -65,9 +65,17 @@ application "app" do
   revision node[:rax_ruby_app][:git_revision]
 end
 
+bash "bundle install in application directory" do
+  user 'rails'
+  cwd '/home/rails/rails_app/current'
+  code <<-EOH
+  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle install
+  EOH
+end
+
 bash "install ref & therubyracer" do
   user 'rails'
-  cwd '/home/rails/rails_app'
+  cwd '/home/rails/rails_app/current'
   code <<-EOH
   /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundler exec gem install ref
   /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundler exec gem install therubyracer
