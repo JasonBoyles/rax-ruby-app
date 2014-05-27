@@ -13,7 +13,10 @@ Vagrant.configure('2') do |config|
   config.vm.provision :chef_solo do |chef|
     chef.json = {
         :rax_ruby_app => {
-          :db_type => "postgres",
+          :db => {
+            :type => "postgres",
+            :install_service => "true"
+          },
           :db_admin_password => "averybadpassword",
           :db_app_user_id => "rails",
           :db_app_user_password => "averybadpassword",

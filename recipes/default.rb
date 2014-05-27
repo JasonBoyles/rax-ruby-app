@@ -35,11 +35,8 @@ group "sudo" do
   append true
 end
 
-if node[:rax_ruby_app][:db_type] == 'postgres'
-  node.set[:postgresql][:password][:postgres] = node[:rax_ruby_app][:db_admin_password]
-  include_recipe 'postgresql::server'
-elsif node[:rax_ruby_app][:db_type] == 'mysql'
-  #do mysql stuff
+if node[:rax_ruby_app][:db][:install_service]
+  include_recipe "rax-ruby-app::_db_#{node[:rax_ruby_app][:db][:type]}"
 end
 
 if node[:rax_ruby_app][:ruby_install_type] == 'chruby'
