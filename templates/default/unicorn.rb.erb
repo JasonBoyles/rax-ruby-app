@@ -1,0 +1,8 @@
+# Unicorn config
+working_directory "<%= @working_directory %>"
+listen <%= @listen_port %> 
+worker_processes <%= @worker_processes %>
+pid "<%= @pid %>"
+user "<%= @user %>", "<%= @group %>"
+stderr_path "<%= @stderr %>"
+stdout_path "<%= @stdout %>"
