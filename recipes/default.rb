@@ -31,10 +31,16 @@ end
 
 group node[:rax_ruby_app][:group]
 
-group 'sudo' do
-  action :modify
+group node[:rax_ruby_app][:group] do
   members node[:rax_ruby_app][:user]
   append true
+  action :modify
+
+end
+
+sudo node[:rax_ruby_app][:user] do
+  nopasswd true
+  user node[:rax_ruby_app][:user]
 end
 
 include_recipe "rax-ruby-app::database"

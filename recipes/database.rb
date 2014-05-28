@@ -1,5 +1,8 @@
 # Encoding: utf-8
 
+include_recipe 'apt::default'
+include_recipe 'build-essential::default'
+
 case node[:rax_ruby_app][:db][:type]
 when 'mysql'
   include_recipe 'mysql-chef_gem'
