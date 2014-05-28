@@ -28,7 +28,6 @@ Vagrant.configure('2') do |config|
         :mysql => {
           :remove_anonymous_users => true,
           :remove_test_database => true,
-          :server_root_password => 'averybadpassword',
           :server_debian_password => 'averydebpassword',
           :server_repl_password => 'averyreplpassword'
         }
