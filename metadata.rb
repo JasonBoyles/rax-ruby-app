@@ -1,6 +1,6 @@
 # Encoding: utf-8
 name             'rax-ruby-app'
-maintainer       'YOUR_COMPANY_NAME'
+maintainer       'Rackspace'
 maintainer_email 'jason.boyles@rackspace.com'
 license          'Apache 2.0'
 description      'Installs/Configures rax-ruby-app'
@@ -16,3 +16,4 @@ depends 'mysql-chef_gem'
 depends 'postgresql'
 depends 'application'
 depends 'database'
+depends 'sudo', '~> 2.6.0'
