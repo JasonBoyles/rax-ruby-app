@@ -60,7 +60,7 @@ bash "bundle install in application directory" do
   EOH
 end
 
-bash 'install ref & therubyracer' do
+bash 'install ref & therubyracer gems' do
   user 'root'
   cwd '/tmp'
   code <<-EOH
