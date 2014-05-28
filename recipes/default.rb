@@ -41,20 +41,7 @@ if node[:rax_ruby_app][:db][:install_service]
   include_recipe "rax-ruby-app::_db_#{node[:rax_ruby_app][:db][:type]}"
 end
 
-if node[:rax_ruby_app][:ruby_install_type] == 'chruby'
-  node.set[:chruby][:rubies] = { "#{node[:rax_ruby_app][:ruby_version]}" => true}
-  node.set[:chruby][:default] = node[:rax_ruby_app][:ruby_version]
-  include_recipe 'chruby::system'
-  bash "install bundler" do
-    user 'root'
-    cwd '/tmp'
-    code <<-EOH
-    sudo /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/gem install bundler
-    EOH
-  end
-elsif node[:rax_ruby_app][:ruby_install_type] == 'rvm'
-  #do rvm stuff
-end
+include_recipe "rax-ruby-app::_ruby_#{node[:rax_ruby_app][:ruby_install_type]}"
 
 application 'app' do
   path File.join(node[:rax_ruby_app][:user_home], 'rails_app')
