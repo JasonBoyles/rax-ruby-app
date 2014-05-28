@@ -37,9 +37,7 @@ group 'sudo' do
   append true
 end
 
-if node[:rax_ruby_app][:db][:install_service]
-  include_recipe "rax-ruby-app::_db_#{node[:rax_ruby_app][:db][:type]}"
-end
+include_recipe "rax-ruby-app::database"
 
 include_recipe "rax-ruby-app::_ruby_#{node[:rax_ruby_app][:ruby_install_type]}"
 

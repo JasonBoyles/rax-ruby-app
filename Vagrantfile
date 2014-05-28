@@ -32,6 +32,12 @@ Vagrant.configure('2') do |config|
           :remove_test_database => true,
           :server_debian_password => 'averydebpassword',
           :server_repl_password => 'averyreplpassword'
+        },
+        :apt => {
+          :compile_time_update => true
+        },
+        "build-essential" => {
+          :compile_time => true
         }
     }
 
