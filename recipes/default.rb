@@ -21,8 +21,6 @@
 include_recipe 'apt::default'
 include_recipe 'build-essential::default'
 
-group node[:rax_ruby_app][:group]
-
 user node[:rax_ruby_app][:user] do
   supports :manage_home => true
   comment "Rails user"
@@ -30,6 +28,8 @@ user node[:rax_ruby_app][:user] do
   shell '/bin/bash'
   system true
 end
+
+group node[:rax_ruby_app][:group]
 
 group 'sudo' do
   action :modify

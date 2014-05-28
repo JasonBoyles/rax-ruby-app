@@ -15,11 +15,11 @@ Vagrant.configure('2') do |config|
         :rax_ruby_app => {
           :db => {
             :type => "postgres",
-            :install_service => "true"
+            :install_service => "true",
+            :admin_password => "averybadpassword",
+            :user_id => "rails",
+            :user_password => "averybadpassword"
           },
-          :db_admin_password => "averybadpassword",
-          :db_app_user_id => "rails",
-          :db_app_user_password => "averybadpassword",
           :ruby_version => "1.9.3-p392",
           :ruby_install_type => "chruby",
           :git_url => 'https://github.com/kandanapp/kandan.git',
