@@ -1,0 +1,7 @@
+production:
+  adapter: <%= @database_type %>
+  database: <%= @app_database_name %>
+  username: <%= @rails_app_db_username %>
+  password: <%= @rails_app_db_password %>
+  pool: 5
+  timeout: 5000

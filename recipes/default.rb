@@ -69,4 +69,12 @@ bash 'install ref & therubyracer gems' do
   EOH
 end
 
+bash 'initialize app database' do
+  user node[:rax_ruby_app][:user]
+  cwd File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
+  code <<-EOH
+  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec rake db:migrate
+  EOH
+end
+
 include_recipe "rax-ruby-app::_app_server_#{node[:rax_ruby_app][:app_server]}"

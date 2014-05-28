@@ -24,8 +24,8 @@ Vagrant.configure('2') do |config|
           },
           :ruby_version => "1.9.3-p392",
           :ruby_install_type => "chruby",
-          :git_url => 'https://github.com/kandanapp/kandan.git',
-          :git_revision => 'v1.2'
+          :git_url => 'https://github.com/JasonBoyles/kandan.git',
+          :git_revision => 'master'
         },
         :mysql => {
           :remove_anonymous_users => true,
