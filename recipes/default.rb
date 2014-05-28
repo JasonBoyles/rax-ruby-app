@@ -81,3 +81,5 @@ bash 'install ref & therubyracer' do
   /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/gem install therubyracer
   EOH
 end
+
+include_recipe "rax-ruby-app::_app_server_#{node[:rax_ruby_app][:app_server]}"
