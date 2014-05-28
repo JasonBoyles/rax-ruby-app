@@ -1,5 +1,13 @@
 # configure unicorn application server
 
+bash 'install unicorn gem' do
+  user 'root'
+  cwd '/tmp'
+  code <<-EOH
+  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/gem install unicorn
+  EOH
+end
+
 template "#{File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current', 'config', 'unicorn.rb')}" do
   source "unicorn.rb.erb"
   owner node[:rax_ruby_app][:user]
