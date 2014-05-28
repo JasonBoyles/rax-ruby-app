@@ -13,14 +13,24 @@ Vagrant.configure('2') do |config|
   config.vm.provision :chef_solo do |chef|
     chef.json = {
         :rax_ruby_app => {
-          :db_type => "postgres",
-          :db_admin_password => "averybadpassword",
-          :db_app_user_id => "rails",
-          :db_app_user_password => "averybadpassword",
+          :db => {
+            :type => "postgres",
+            :install_service => "true",
+            :admin_password => "averybadpassword",
+            :user_id => "rails",
+            :user_password => "averybadpassword"
+          },
           :ruby_version => "1.9.3-p392",
           :ruby_install_type => "chruby",
           :git_url => 'https://github.com/kandanapp/kandan.git',
           :git_revision => 'v1.2'
+        },
+        :mysql => {
+          :remove_anonymous_users => true,
+          :remove_test_database => true,
+          :server_root_password => 'averybadpassword',
+          :server_debian_password => 'averydebpassword',
+          :server_repl_password => 'averyreplpassword'
         }
     }
 
