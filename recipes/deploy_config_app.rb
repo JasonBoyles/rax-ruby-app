@@ -10,7 +10,7 @@ end
 
 bash 'bundle install in application directory' do
   user node[:rax_ruby_app][:user]
-  group 'sudo'
+  group node[:rax_ruby_app][:group]
   cwd File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
   code <<-EOH
   /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle install
@@ -43,6 +43,7 @@ end
 bash 'initialize app database' do
   user node[:rax_ruby_app][:user]
   cwd File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
+  environment "RAILS_ENV" => node[:rax_ruby_app][:rails][:environment]
   code <<-EOH
   /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec rake \
   db:migrate
