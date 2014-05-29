@@ -13,6 +13,7 @@ default[:rax_ruby_app][:db][:user_id] = node[:rax_ruby_app][:user]
 default[:rax_ruby_app][:db][:user_password] = 'uShouldChangeMe'
 default[:rax_ruby_app][:db][:name] = 'railsapp'
 default[:rax_ruby_app][:db][:acl] = '%'
+default[:rax_ruby_app][:db][:host] = '127.0.0.1'
 
 default[:rax_ruby_app][:app_server] = 'unicorn'
 

@@ -1,11 +1,22 @@
 # Encoding: utf-8
 
+puts "debug: #{node[:rax_ruby_app][:db][:host]}"
+
 application 'app' do
   path File.join(node[:rax_ruby_app][:user_home], 'rails_app')
   owner node[:rax_ruby_app][:user]
   group node[:rax_ruby_app][:group]
   repository node[:rax_ruby_app][:git_url]
   revision node[:rax_ruby_app][:git_revision]
+  rails do
+    database do
+        host node[:rax_ruby_app][:db][:host]
+        adapter node[:rax_ruby_app][:db][:type]
+        database node[:rax_ruby_app][:db][:name]
+        username node[:rax_ruby_app][:db][:user_id]
+        password node[:rax_ruby_app][:db][:user_password]
+    end
+  end
 end
 
 bash 'bundle install in application directory' do
@@ -26,19 +37,19 @@ bash 'install ref & therubyracer gems' do
   EOH
 end
 
-template File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current',
-                   'config', 'database.yml') do
-  source 'database.yml.erb'
-  owner node[:rax_ruby_app][:user]
-  group node[:rax_ruby_app][:group]
-  mode 0660
-  variables(
-    database_type: node[:rax_ruby_app][:db][:type],
-    app_database_name: node[:rax_ruby_app][:db][:name],
-    rails_app_db_username: node[:rax_ruby_app][:db][:user_id],
-    rails_app_db_password: node[:rax_ruby_app][:db][:user_password]
-  )
-end
+#template File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current',
+#                   'config', 'database.yml') do
+#  source 'database.yml.erb'
+#  owner node[:rax_ruby_app][:user]
+#  group node[:rax_ruby_app][:group]
+#  mode 0660
+#  variables(
+#    database_type: node[:rax_ruby_app][:db][:type],
+#    app_database_name: node[:rax_ruby_app][:db][:name],
+#    rails_app_db_username: node[:rax_ruby_app][:db][:user_id],
+#    rails_app_db_password: node[:rax_ruby_app][:db][:user_password]
+#  )
+#end
 
 bash 'initialize app database' do
   user node[:rax_ruby_app][:user]
