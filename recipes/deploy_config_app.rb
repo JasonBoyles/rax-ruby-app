@@ -1,4 +1,4 @@
-
+# Encoding: utf-8
 
 application 'app' do
   path File.join(node[:rax_ruby_app][:user_home], 'rails_app')
@@ -8,7 +8,7 @@ application 'app' do
   revision node[:rax_ruby_app][:git_revision]
 end
 
-bash "bundle install in application directory" do
+bash 'bundle install in application directory' do
   user node[:rax_ruby_app][:user]
   group 'sudo'
   cwd File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
@@ -26,24 +26,25 @@ bash 'install ref & therubyracer gems' do
   EOH
 end
 
-template "#{File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current', 'config', 'database.yml')}" do
+template File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current',
+                   'config', 'database.yml') do
   source 'database.yml.erb'
   owner node[:rax_ruby_app][:user]
   group node[:rax_ruby_app][:group]
   mode 0660
-  variables({
-    :database_type => node[:rax_ruby_app][:db][:type],
-    :app_database_name => node[:rax_ruby_app][:db][:app_db_name],
-    :rails_app_db_username => node[:rax_ruby_app][:db][:user_id],
-    :rails_app_db_password => node[:rax_ruby_app][:db][:user_password]
-    })
+  variables(
+    database_type: node[:rax_ruby_app][:db][:type],
+    app_database_name: node[:rax_ruby_app][:db][:name],
+    rails_app_db_username: node[:rax_ruby_app][:db][:user_id],
+    rails_app_db_password: node[:rax_ruby_app][:db][:user_password]
+  )
 end
-
 
 bash 'initialize app database' do
   user node[:rax_ruby_app][:user]
   cwd File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
   code <<-EOH
-  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec rake db:migrate
+  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec rake \
+  db:migrate
   EOH
 end

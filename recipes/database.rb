@@ -45,7 +45,7 @@ if node[:rax_ruby_app][:db][:install_service]
     provider user_provider
     database_name node[:rax_ruby_app][:db][:name]
     host node[:rax_ruby_app][:db][:acl]
-    privileges [:select,:update,:insert]
+    privileges [:select, :update, :insert]
     action :create
   end
 end

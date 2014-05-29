@@ -1,6 +1,6 @@
 # Encoding: utf-8
 
-node.set[:chruby][:rubies] = { "#{node[:rax_ruby_app][:ruby_version]}" => true}
+node.set[:chruby][:rubies] = { node[:rax_ruby_app][:ruby_version] => true }
 node.set[:chruby][:default] = node[:rax_ruby_app][:ruby_version]
 
 include_recipe 'chruby::system'
