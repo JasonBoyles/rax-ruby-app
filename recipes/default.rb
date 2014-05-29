@@ -22,8 +22,8 @@ include_recipe 'apt::default'
 include_recipe 'build-essential::default'
 
 user node[:rax_ruby_app][:user] do
-  supports :manage_home => true
-  comment "Rails user"
+  supports manage_home: true
+  comment 'Rails user'
   home node[:rax_ruby_app][:user_home]
   shell '/bin/bash'
   system true
@@ -43,10 +43,10 @@ sudo node[:rax_ruby_app][:user] do
   user node[:rax_ruby_app][:user]
 end
 
-include_recipe "rax-ruby-app::database"
+include_recipe 'rax-ruby-app::database'
 
 include_recipe "rax-ruby-app::_ruby_#{node[:rax_ruby_app][:ruby_install_type]}"
 
-include_recipe "rax-ruby-app::deploy_config_app"
+include_recipe 'rax-ruby-app::deploy_config_app'
 
 include_recipe "rax-ruby-app::_app_server_#{node[:rax_ruby_app][:app_server]}"

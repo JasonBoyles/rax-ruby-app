@@ -16,7 +16,7 @@ if node[:rax_ruby_app][:db][:install_service]
   case node[:rax_ruby_app][:db][:type]
   when 'mysql'
     username = 'root'
-    port = node['mysql']['port']
+    port = node['mysql']['port'].to_i
     provider = Chef::Provider::Database::Mysql
     user_provider = Chef::Provider::Database::MysqlUser
   when 'postgresql'
@@ -45,7 +45,7 @@ if node[:rax_ruby_app][:db][:install_service]
     provider user_provider
     database_name node[:rax_ruby_app][:db][:name]
     host node[:rax_ruby_app][:db][:acl]
-    privileges [:select,:update,:insert]
+    privileges [:select, :update, :insert]
     action :create
   end
 end
