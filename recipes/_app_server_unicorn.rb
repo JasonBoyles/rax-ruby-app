@@ -10,13 +10,9 @@ end
 
 rails_app_dir = File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
 
-node.set['unicorn-ng']['config']['config_file'] = File.join(
-    rails_app_dir, 'config', 'unicorn.rb')
-node.set['unicorn-ng']['service']['rails_root'] = rails_app_dir
-node.set['unicorn-ng']['service']['user'] = node[:rax_ruby_app][:user]
 node.set['unicorn-ng']['config']['listen'] = 'unix:tmp/sockets/unicorn.sock'
 node.set[:rax_ruby_app][:socket_path] = File.join(rails_app_dir,
-    node['unicorn-ng']['config']['listen'])
+    node['unicorn-ng']['config']['listen'].split(':')[1])
 
 log "bundle path is #{node['unicorn-ng']['service']['bundle']}" do
   level :info
@@ -33,7 +29,7 @@ end
 unicorn_ng_config File.join(rails_app_dir, 'config', 'unicorn.rb') do
     user node[:rax_ruby_app][:user]
     working_directory rails_app_dir
-    listen  'unix:tmp/sockets/unicorn.sock'
+    listen  node['unicorn-ng']['config']['listen']
     worker_processes 10
     backlog 1024
 end
