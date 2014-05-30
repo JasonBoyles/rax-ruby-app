@@ -20,3 +20,6 @@ default[:rax_ruby_app][:rails][:environment] = 'production'
 
 default[:rax_ruby_app][:unicorn][:port] = 8080
 default[:rax_ruby_app][:unicorn][:worker_processes] = 3
+
+# Webserver Settings
+default[:rax_ruby_app][:web][:server] = 'nginx'
