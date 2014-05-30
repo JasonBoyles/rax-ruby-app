@@ -14,10 +14,6 @@ node.set['unicorn-ng']['config']['listen'] = 'unix:tmp/sockets/unicorn.sock'
 node.set[:rax_ruby_app][:socket_path] = File.join(rails_app_dir,
     node['unicorn-ng']['config']['listen'].split(':')[1])
 
-log "bundle path is #{node['unicorn-ng']['service']['bundle']}" do
-  level :info
-end
-
 %w{tmp tmp/pids tmp/sockets log}.each do |d|
   directory File.join(rails_app_dir, d) do
     owner node[:rax_ruby_app][:user]
@@ -29,7 +25,7 @@ end
 unicorn_ng_config File.join(rails_app_dir, 'config', 'unicorn.rb') do
     user node[:rax_ruby_app][:user]
     working_directory rails_app_dir
-    listen  node['unicorn-ng']['config']['listen']
+    listen node['unicorn-ng']['config']['listen']
     worker_processes 10
     backlog 1024
 end
