@@ -50,3 +50,5 @@ include_recipe "rax-ruby-app::_ruby_#{node[:rax_ruby_app][:ruby_install_type]}"
 include_recipe 'rax-ruby-app::deploy_config_app'
 
 include_recipe "rax-ruby-app::_app_server_#{node[:rax_ruby_app][:app_server]}"
+
+include_recipe "rax-ruby-app::_web_#{node[:rax_ruby_app][:web][:server]}"
