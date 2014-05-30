@@ -17,7 +17,6 @@ node.set['unicorn-ng']['config']['worker_processes'] = 10
 node.set['unicorn-ng']['service']['user'] = node[:rax_ruby_app][:user]
 node.set['unicorn-ng']['service']['environment'] = node[:rax_ruby_app][:rails][:environment]
 node.set['unicorn-ng']['config']['listen'] = 'unix:tmp/sockets/unicorn.sock'
-node.override['unicorn-ng']['service']['bundle'] = '/opt/rubies/1.9.3-p392/bin/bundle'
 node.set[:rax_ruby_app][:socket_path] = File.join(rails_app_dir,
     node['unicorn-ng']['config']['listen'])
 
