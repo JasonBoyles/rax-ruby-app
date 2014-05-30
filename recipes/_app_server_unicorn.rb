@@ -10,23 +10,6 @@ end
 
 rails_app_dir = File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
 
-template File.join(rails_app_dir, 'config', 'unicorn.rb') do
-  source 'unicorn.rb.erb'
-  owner node[:rax_ruby_app][:user]
-  group node[:rax_ruby_app][:group]
-  mode 0660
-  variables(
-    working_directory: rails_app_dir,
-    listen_port: node[:rax_ruby_app][:unicorn][:port],
-    worker_processes: node[:rax_ruby_app][:unicorn][:worker_processes],
-    pid: File.join(rails_app_dir, 'unicorn.pid'),
-    user: node[:rax_ruby_app][:user],
-    group: node[:rax_ruby_app][:group],
-    stderr: File.join(rails_app_dir, 'unicorn_stderr.log'),
-    stdout: File.join(rails_app_dir,'unicorn_stdout.log')
-  )
-end
-
 node.set['unicorn-ng']['config']['config_file'] = File.join(
     rails_app_dir, 'config', 'unicorn.rb')
 node.set['unicorn-ng']['service']['rails_root'] = rails_app_dir
@@ -35,7 +18,7 @@ node.set['unicorn-ng']['service']['user'] = node[:rax_ruby_app][:user]
 node.set['unicorn-ng']['service']['environment'] = node[:rax_ruby_app][:rails][:environment]
 node.set['unicorn-ng']['config']['listen'] = 'unix:tmp/sockets/unicorn.sock'
 node.override['unicorn-ng']['service']['bundle'] = '/opt/rubies/1.9.3-p392/bin/bundle'
-node.set[:rax_ruby_app][:socket_path] = File.join(rails_app_dir, 
+node.set[:rax_ruby_app][:socket_path] = File.join(rails_app_dir,
     node['unicorn-ng']['config']['listen'])
 
 log "bundle path is #{node['unicorn-ng']['service']['bundle']}" do
@@ -76,7 +59,7 @@ unicorn_ng_config File.join(rails_app_dir, 'config', 'unicorn.rb') do
     backlog 1024
 end
 
-unicorn_ng_service File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current') do
+unicorn_ng_service rails_app_dir do
     user node[:rax_ruby_app][:user]
     bundle node['unicorn-ng']['service']['bundle']
     environment node[:rax_ruby_app][:rails][:environment]
