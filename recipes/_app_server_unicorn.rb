@@ -50,7 +50,6 @@ end
 directory File.join(rails_app_dir, 'tmp') do
   owner node[:rax_ruby_app][:user]
   group node[:rax_ruby_app][:group]
-  recursive true
   action :create
 end
 
