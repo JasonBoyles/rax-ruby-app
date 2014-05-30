@@ -71,7 +71,7 @@ end
 unicorn_ng_config File.join(node[:rax_ruby_app][:user_home],
                    'rails_app', 'current',
                    'config', 'unicorn.rb') do
-    user 'rails'
+    user node[:rax_ruby_app][:user]
     working_directory File.join(node[:rax_ruby_app][:user_home], 'rails_app',
                                  'current')
     listen  'unix:tmp/sockets/unicorn.sock'
@@ -79,6 +79,7 @@ unicorn_ng_config File.join(node[:rax_ruby_app][:user_home],
 end
 
 unicorn_ng_service File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current') do
+    user node[:rax_ruby_app][:user]
     bundle node['unicorn-ng']['service']['bundle']
     environment node[:rax_ruby_app][:rails][:environment]
 end
