@@ -25,31 +25,12 @@ log "bundle path is #{node['unicorn-ng']['service']['bundle']}" do
   level :info
 end
 
-directory File.join(rails_app_dir, 'tmp') do
-  owner node[:rax_ruby_app][:user]
-  group node[:rax_ruby_app][:group]
-  action :create
-end
-
-directory File.join(rails_app_dir, 'tmp', 'pids') do
-  owner node[:rax_ruby_app][:user]
-  group node[:rax_ruby_app][:group]
-  recursive true
-  action :create
-end
-
-directory File.join(rails_app_dir, 'tmp', 'sockets') do
-  owner node[:rax_ruby_app][:user]
-  group node[:rax_ruby_app][:group]
-  recursive true
-  action :create
-end
-
-directory File.join(rails_app_dir, 'log') do
-  owner node[:rax_ruby_app][:user]
-  group node[:rax_ruby_app][:group]
-  recursive true
-  action :create
+%w{tmp tmp/pids tmp/sockets log}.each do |d|
+  directory File.join(rails_app_dir, d) do
+    owner node[:rax_ruby_app][:user]
+    group node[:rax_ruby_app][:group]
+    action :create
+  end
 end
 
 unicorn_ng_config File.join(rails_app_dir, 'config', 'unicorn.rb') do
@@ -61,6 +42,6 @@ end
 
 unicorn_ng_service rails_app_dir do
     user node[:rax_ruby_app][:user]
-    bundle node['unicorn-ng']['service']['bundle']
+    bundle File.join(node[:rax_ruby_app][:ruby_bin_dir], 'bundle')
     environment node[:rax_ruby_app][:rails][:environment]
 end
