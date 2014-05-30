@@ -6,7 +6,7 @@ node.set[:chruby][:default] = node[:rax_ruby_app][:ruby_version]
 include_recipe 'chruby::system'
 
 node.set[:rax_ruby_app][:ruby_bin_dir] = File.join(
-  'opt', 'rubies', node[:rax_ruby_app][:ruby_version]}, 'bin')
+  '/opt', 'rubies', node[:rax_ruby_app][:ruby_version], 'bin')
 
 bash 'install bundler' do
   user 'root'
