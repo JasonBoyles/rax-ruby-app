@@ -17,6 +17,7 @@ default[:rax_ruby_app][:db][:acl] = '%'
 default[:rax_ruby_app][:app_server] = 'unicorn'
 
 default[:rax_ruby_app][:rails][:environment] = 'production'
+default[:rax_ruby_app][:rails][:rake_tasks] = 'db:create db:migrate'
 
 default[:rax_ruby_app][:unicorn][:port] = 8080
 default[:rax_ruby_app][:unicorn][:worker_processes] = 3

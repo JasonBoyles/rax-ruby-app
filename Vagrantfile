@@ -4,6 +4,8 @@
 Vagrant.configure('2') do |config|
   config.vm.network "forwarded_port", guest: 3000, host: 8181,
     auto_correct: true
+  config.vm.network "forwarded_port", guest: 80, host: 8383,
+    auto_correct: true
   config.vm.network "forwarded_port", guest: 8080, host: 8282,
     auto_correct: true
   config.vm.hostname = 'rax-ruby-app'
@@ -22,10 +24,19 @@ Vagrant.configure('2') do |config|
             :user_id => "rails",
             :user_password => "averybadpassword"
           },
+          :web => {
+            :server => 'nginx'
+          },
           :ruby_version => "1.9.3-p392",
+          # :ruby_version => "2.1.1",
           :ruby_install_type => "chruby",
           :git_url => 'https://github.com/JasonBoyles/kandan.git',
-          :git_revision => 'master'
+          # :git_url => 'https://github.com/railstutorial/sample_app.git',
+          :git_revision => 'master',
+          :app_server => 'unicorn',
+          :rails => {
+            :rake_tasks => 'db:create db:migrate kandan:bootstrap assets:precompile'
+          }
         },
         :mysql => {
           :remove_anonymous_users => true,

@@ -40,12 +40,13 @@ template File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current',
   )
 end
 
-bash 'initialize app database' do
-  user node[:rax_ruby_app][:user]
-  cwd File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
-  environment "RAILS_ENV" => node[:rax_ruby_app][:rails][:environment]
-  code <<-EOH
-  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec rake \
-  db:migrate
-  EOH
+node[:rax_ruby_app][:rails][:rake_tasks].split.each do |task|
+  bash "do rake task #{task}" do
+    user node[:rax_ruby_app][:user]
+    cwd File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
+    environment "RAILS_ENV" => node[:rax_ruby_app][:rails][:environment]
+    code <<-EOH
+    /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle exec rake #{task}
+    EOH
+  end
 end
