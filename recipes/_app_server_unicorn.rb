@@ -31,6 +31,7 @@ unicorn_ng_config File.join(rails_app_dir, 'config', 'unicorn.rb') do
 end
 
 unicorn_ng_service rails_app_dir do
+    service_name "unicorn"
     user node[:rax_ruby_app][:user]
     bundle File.join(node[:rax_ruby_app][:ruby_bin_dir], 'bundle')
     environment node[:rax_ruby_app][:rails][:environment]
