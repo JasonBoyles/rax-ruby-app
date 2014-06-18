@@ -27,7 +27,7 @@ if node[:rax_ruby_app][:db][:install_service]
   end
 
   db_connection_info = {
-    host: 'localhost',
+    host: node[:rax_ruby_app][:db][:hostname],
     username: username,
     port: port,
     password: node[:rax_ruby_app][:db][:admin_password]

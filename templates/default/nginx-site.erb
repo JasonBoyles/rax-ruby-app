@@ -6,7 +6,7 @@ server {
   listen   80;
   server_name  ruby-app;
   root <%= File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current',
-                     'public') %>
+                     'public') %>;
 
   access_log  <%= File.join(node['nginx']['log_dir'], 'access.log') %> combined;
   location / {
