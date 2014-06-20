@@ -21,6 +21,10 @@
 include_recipe 'apt::default'
 include_recipe 'build-essential::default'
 
+if node[:rax_ruby_app][:app_server] == 'passenger'
+  node.set[:rax_ruby_app][:web][:server] = 'apache'
+end
+
 user node[:rax_ruby_app][:user] do
   supports manage_home: true
   comment 'Rails user'
@@ -35,7 +39,6 @@ group node[:rax_ruby_app][:group] do
   members node[:rax_ruby_app][:user]
   append true
   action :modify
-
 end
 
 sudo node[:rax_ruby_app][:user] do

@@ -1,8 +1,16 @@
 # Encoding: utf-8
 
-package 'nodejs' do
-  action :install
-  # to give execjs a javascript execution engine
+commonly_required_packages = [
+  'nodejs',                  # js execution environment for the execjs gem
+  'libmysqlclient-dev',      # MySQL client lib for the mysql2 gem
+  'libmagickwand-dev',       # rmagick uses this for image manipulation
+  'libicu-dev'               # unicode string handling for charlock-holmes
+]
+
+commonly_required_packages.each do |pkg|
+  package pkg do
+    action :install
+  end
 end
 
 application 'app' do
@@ -19,14 +27,6 @@ bash 'bundle install in application directory' do
   cwd File.join(node[:rax_ruby_app][:user_home], 'rails_app', 'current')
   code <<-EOH
   /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/bundle install --deployment
-  EOH
-end
-
-bash 'bundle exec gem install execjs' do
-  user 'root'
-  cwd '/tmp'
-  code <<-EOH
-  /opt/rubies/#{node[:rax_ruby_app][:ruby_version]}/bin/gem install execjs
   EOH
 end
 

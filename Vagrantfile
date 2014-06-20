@@ -18,7 +18,7 @@ Vagrant.configure('2') do |config|
     chef.json = {
         :rax_ruby_app => {
           :db => {
-            :type => "postgresql",
+            :type => "mysql",
             :install_service => "true",
             :admin_password => "averybadpassword",
             :user_id => "rails",
@@ -30,12 +30,17 @@ Vagrant.configure('2') do |config|
           :ruby_version => "1.9.3-p392",
           # :ruby_version => "2.1.1",
           :ruby_install_type => "chruby",
-          :git_url => 'https://github.com/JasonBoyles/kandan.git',
+          :git_url => 'https://github.com/JasonBoyles/railsapp.git',
+          # :git_url => 'https://github.com/rackerlabs/multi-cloud-demo-app.git',
+          # :git_url => 'https://github.com/JasonBoyles/kandan.git',
+          # :git_url => 'https://github.com/kandanapp/kandan.git',
           # :git_url => 'https://github.com/railstutorial/sample_app.git',
           :git_revision => 'master',
-          :app_server => 'unicorn',
+          :app_server => 'passenger',
           :rails => {
-            :rake_tasks => 'db:create db:migrate kandan:bootstrap assets:precompile'
+            :db_adapter => "postgresql",
+            :rake_tasks => 'db:migrate assets:precompile'
+            # :rake_tasks => 'db:migrate assets:precompile kandan:bootstrap'
           }
         },
         :mysql => {
