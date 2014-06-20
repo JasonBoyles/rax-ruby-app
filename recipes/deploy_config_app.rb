@@ -7,7 +7,10 @@ commonly_required_packages = [
   'libicu-dev'               # unicode string handling for charlock-holmes
 ]
 
-commonly_required_packages.each do |pkg|
+pkgs_to_install = node[:rax_ruby_app][:additional_packages].split()
+pkgs_to_install = pkgs_to_install.concat(commonly_required_packages)
+
+pkgs_to_install.each do |pkg|
   package pkg do
     action :install
   end

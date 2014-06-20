@@ -19,11 +19,13 @@ if node[:rax_ruby_app][:db][:install_service]
     port = node['mysql']['port'].to_i
     provider = Chef::Provider::Database::Mysql
     user_provider = Chef::Provider::Database::MysqlUser
+    db_privileges = [:index, :create, :select, :update, :insert]
   when 'postgresql'
     username = 'postgres'
     port = node['postgresql']['config']['port']
     provider = Chef::Provider::Database::Postgresql
     user_provider = Chef::Provider::Database::PostgresqlUser
+    db_privileges = [:all]
   end
 
   db_connection_info = {
@@ -43,9 +45,15 @@ if node[:rax_ruby_app][:db][:install_service]
     connection db_connection_info
     password node[:rax_ruby_app][:db][:user_password]
     provider user_provider
+    action :create
+  end
+
+  database_user node[:rax_ruby_app][:db][:user_id] do
+    connection db_connection_info
+    provider user_provider
     database_name node[:rax_ruby_app][:db][:name]
     host node[:rax_ruby_app][:db][:acl]
-    privileges [:select, :update, :insert]
-    action :create
+    privileges db_privileges
+    action :grant
   end
 end

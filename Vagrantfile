@@ -15,10 +15,12 @@ Vagrant.configure('2') do |config|
   config.berkshelf.enabled = true
 
   config.vm.provision :chef_solo do |chef|
+    # chef.log_level = "debug"
     chef.json = {
         :rax_ruby_app => {
+          :additional_packages => 'libpq-dev',
           :db => {
-            :type => "mysql",
+            :type => "postgresql",
             :install_service => "true",
             :admin_password => "averybadpassword",
             :user_id => "rails",
@@ -28,7 +30,7 @@ Vagrant.configure('2') do |config|
             :server => 'nginx'
           },
           :ruby_version => "1.9.3-p392",
-          # :ruby_version => "2.1.1",
+          # :ruby_version => "2.1.2",
           :ruby_install_type => "chruby",
           :git_url => 'https://github.com/JasonBoyles/railsapp.git',
           # :git_url => 'https://github.com/rackerlabs/multi-cloud-demo-app.git',
@@ -36,9 +38,9 @@ Vagrant.configure('2') do |config|
           # :git_url => 'https://github.com/kandanapp/kandan.git',
           # :git_url => 'https://github.com/railstutorial/sample_app.git',
           :git_revision => 'master',
-          :app_server => 'passenger',
+          :app_server => 'unicorn',
           :rails => {
-            :db_adapter => "postgresql",
+            :db_adapter => 'postgresql',
             :rake_tasks => 'db:migrate assets:precompile'
             # :rake_tasks => 'db:migrate assets:precompile kandan:bootstrap'
           }
